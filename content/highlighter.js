@@ -226,6 +226,8 @@ Find.register('Content.Highlighter', function(self) {
      * @param {number} index - The index to seek to
      * @param {object} options - The search options
      * */
+    
+    var iterative_pos = 1;
     self.seekHighlight = function(index, options) {
         if (index === null || options == null) {
             return;
@@ -247,11 +249,17 @@ Find.register('Content.Highlighter', function(self) {
 
         for (let elsIndex = 0; elsIndex < els.length; elsIndex++) {
             let style = 'all: unset; background-color: ' + options.index_highlight_color.hexColor + ';';
+
             els[elsIndex].classList.add(indexHighlight);
             els[elsIndex].setAttribute("style", style);
-            var btn = document.createElement("BUTTON");   
-            btn.innerHTML = els[elsIndex].innerHTML;                  
-            document.body.appendChild(btn);               
+
+            var item = document.createElement("p");  
+            var button_style = `position: fixed; top: ${iterative_pos}vh; left: 1vh;`
+            iterative_pos = iterative_pos + 2; 
+            item.innerHTML = els[elsIndex].innerHTML;                  
+            item.setAttribute("style", button_style);
+
+            document.body.appendChild(item);               
         }
 
         els[0].scrollIntoView(true);
